@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Create_Flow_XML_File</name>
         <label>Create Flow XML File</label>
-        <locationX>899</locationX>
+        <locationX>891</locationX>
         <locationY>91</locationY>
         <actionName>CreateFile</actionName>
         <actionType>apex</actionType>
@@ -19,7 +19,7 @@
         <inputParameters>
             <name>fileContent</name>
             <value>
-                <elementReference>RetrieveFlow.extractedMetadataString</elementReference>
+                <elementReference>vExtractedFlowString</elementReference>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -284,14 +284,14 @@ MID({!FlowFileUpload.fileNames},2,LEN({!FlowFileUpload.fileNames})-16))</express
     <screens>
         <name>Export_Result</name>
         <label>Export Result</label>
-        <locationX>1040</locationX>
+        <locationX>1039</locationX>
         <locationY>91</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <fields>
             <name>ExportMessage</name>
-            <fieldText>&lt;p&gt;Flow successfully saved as &lt;b&gt;{!fFileName}&lt;/b&gt; (ContentDocumentId: {!Create_Flow_XML_File.documentId})&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Flow successfully saved as &lt;b&gt;{!fFileName}&lt;/b&gt; &lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -417,6 +417,12 @@ MID({!FlowFileUpload.fileNames},2,LEN({!FlowFileUpload.fileNames})-16))</express
             <extensionName>c:fbc_transferMetadata</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
+                <name>metadataName</name>
+                <value>
+                    <elementReference>SelectFlow.selectedFlowApiName</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
                 <name>objectType</name>
                 <value>
                     <stringValue>Flow</stringValue>
@@ -428,14 +434,11 @@ MID({!FlowFileUpload.fileNames},2,LEN({!FlowFileUpload.fileNames})-16))</express
                     <stringValue>retrieve</stringValue>
                 </value>
             </inputParameters>
-            <inputParameters>
-                <name>metadataName</name>
-                <value>
-                    <elementReference>SelectFlow.selectedFlowApiName</elementReference>
-                </value>
-            </inputParameters>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <outputParameters>
+                <assignToReference>vExtractedFlowString</assignToReference>
+                <name>extractedMetadataString</name>
+            </outputParameters>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>true</showHeader>
@@ -447,7 +450,7 @@ MID({!FlowFileUpload.fileNames},2,LEN({!FlowFileUpload.fileNames})-16))</express
             <targetReference>Import_Export_Flows</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <textTemplates>
         <name>ttExportSuccess</name>
         <text>&lt;p&gt;Successfully saved the Flow file as {!fFileName}&lt;/p&gt;</text>
@@ -469,6 +472,13 @@ MID({!FlowFileUpload.fileNames},2,LEN({!FlowFileUpload.fileNames})-16))</express
     </variables>
     <variables>
         <name>vDocumentId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>vExtractedFlowString</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
