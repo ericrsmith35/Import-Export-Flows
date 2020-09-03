@@ -19,7 +19,7 @@
         <inputParameters>
             <name>fileContent</name>
             <value>
-                <elementReference>vExtractedFlowString</elementReference>
+                <elementReference>vFlowString</elementReference>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -218,6 +218,25 @@ MID({!FlowFileUpload.fileNames},2,LEN({!FlowFileUpload.fileNames})-16))</express
     <processType>Flow</processType>
     <runInMode>DefaultMode</runInMode>
     <screens>
+        <name>deb</name>
+        <label>deb</label>
+        <locationX>822</locationX>
+        <locationY>224</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Create_Flow_XML_File</targetReference>
+        </connector>
+        <fields>
+            <name>d</name>
+            <fieldText>&lt;p&gt;done&lt;/p&gt;&lt;p&gt;{!fFileName}&lt;/p&gt;&lt;p&gt;{!vFlowString}&lt;/p&gt;&lt;p&gt;{!vZipString}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Deploy_Flow_Metadata</name>
         <label>Deploy Flow Metadata</label>
         <locationX>1375</locationX>
@@ -405,12 +424,12 @@ MID({!FlowFileUpload.fileNames},2,LEN({!FlowFileUpload.fileNames})-16))</express
         <name>Retrieve_Flow_Metadata</name>
         <label>Retrieve Flow Metadata</label>
         <locationX>746</locationX>
-        <locationY>91</locationY>
+        <locationY>89</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Create_Flow_XML_File</targetReference>
+            <targetReference>deb</targetReference>
         </connector>
         <fields>
             <name>RetrieveFlow</name>
@@ -436,7 +455,11 @@ MID({!FlowFileUpload.fileNames},2,LEN({!FlowFileUpload.fileNames})-16))</express
             </inputParameters>
             <isRequired>true</isRequired>
             <outputParameters>
-                <assignToReference>vExtractedFlowString</assignToReference>
+                <assignToReference>vZipString</assignToReference>
+                <name>zipFileString</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>vFlowString</assignToReference>
                 <name>extractedMetadataString</name>
             </outputParameters>
         </fields>
@@ -478,7 +501,14 @@ MID({!FlowFileUpload.fileNames},2,LEN({!FlowFileUpload.fileNames})-16))</express
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>vExtractedFlowString</name>
+        <name>vFlowString</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>vZipString</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

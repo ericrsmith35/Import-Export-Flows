@@ -27,6 +27,10 @@ public with sharing class RetrieveFile {
             Blob docBlobContent = getContent(docId);
             String docStringContent = blobToString(docBlobContent, 'ISO-8859-1');
 
+            // Escape {} characters so the String can be processed in a Flow
+            docStringContent = docStringContent.replace('{', '&lbrace;');
+            docStringContent = docStringContent.replace('}', '&rbrace;');
+
             curResult.fileName = fileName;
             curResult.fileContent = docStringContent;
 

@@ -38,6 +38,11 @@
 
     public static String generateDocument(String documentTitle, String documentPath, String documentContent) {
         ContentVersion cv = new ContentVersion();
+
+        // Special Processing to unescape {} characters passed by the Import/Export Flows flow
+        documentContent = documentContent.replace('&lbrace;', '{');
+        documentContent = documentContent.replace('&rbrace;', '}');
+                
         cv.VersionData = Blob.valueOf(documentContent);
         cv.Title = documentTitle;
         cv.PathOnClient = documentPath;
