@@ -19,7 +19,7 @@
         <inputParameters>
             <name>fileContent</name>
             <value>
-                <elementReference>RetrieveFlow.extractedMetadataString</elementReference>
+                <elementReference>RetrieveFlow_usf.extractedMetadataString</elementReference>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -211,6 +211,12 @@ MID({!FlowFileUpload.fileNames},2,LEN({!FlowFileUpload.fileNames})-16))</express
         </value>
     </processMetadataValues>
     <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
         <name>OriginBuilderType</name>
         <value>
             <stringValue>LightningFlowBuilder</stringValue>
@@ -230,13 +236,19 @@ MID({!FlowFileUpload.fileNames},2,LEN({!FlowFileUpload.fileNames})-16))</express
             <targetReference>Import_Result</targetReference>
         </connector>
         <fields>
-            <name>DeployFlow</name>
-            <extensionName>c:fbc_transferMetadata</extensionName>
+            <name>DeployFlow_fsc</name>
+            <extensionName>c:fsc_transferMetadata</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>metadataName</name>
                 <value>
                     <elementReference>fFlowAPIName</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>metadataString</name>
+                <value>
+                    <elementReference>Retrieve_Selected_Flow_Contents.fileContent</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -249,12 +261,6 @@ MID({!FlowFileUpload.fileNames},2,LEN({!FlowFileUpload.fileNames})-16))</express
                 <name>transferMode</name>
                 <value>
                     <stringValue>deploy</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>metadataString</name>
-                <value>
-                    <elementReference>Retrieve_Selected_Flow_Contents.fileContent</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -414,8 +420,8 @@ MID({!FlowFileUpload.fileNames},2,LEN({!FlowFileUpload.fileNames})-16))</express
             <targetReference>Create_Flow_XML_File</targetReference>
         </connector>
         <fields>
-            <name>RetrieveFlow</name>
-            <extensionName>c:fbc_transferMetadata</extensionName>
+            <name>RetrieveFlow_usf</name>
+            <extensionName>c:fsc_transferMetadata</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>metadataName</name>
@@ -451,8 +457,8 @@ MID({!FlowFileUpload.fileNames},2,LEN({!FlowFileUpload.fileNames})-16))</express
     <status>Active</status>
     <textTemplates>
         <name>ttExportSuccess</name>
-        <!-- <isViewedAsPlainText>false</isViewedAsPlainText> -->
-        <text>&lt;p&gt;Successfully saved the Flow file as {!fFileName}&lt;/p&gt;</text>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Successfully saved the Flow file as {!fFileName}</text>
     </textTemplates>
     <variables>
         <name>colDocIds</name>
